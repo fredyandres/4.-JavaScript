@@ -35,12 +35,17 @@ var Calculadora = {
 		document.getElementById("7").addEventListener("click",function(){Calculadora.viewnum("7")});
 		document.getElementById("8").addEventListener("click",function(){Calculadora.viewnum("8")});
 		document.getElementById("9").addEventListener("click",function(){Calculadora.viewnum("9")});
-
-	},
+    document.getElementById("punto").addEventListener("click",function(){Calculadora.punto()});
+    document.getElementById("on").addEventListener("click",function(){Calculadora.on("")});
+  },
 
   //operaciones
   	viewnum: function(valor){
   		this.animboton(valor);
+      if(this.decimal == 1  && this.stop == 0){
+  			this.controlen += 1,
+  			this.stop = 1;
+  		}
   		if(this.pantalla.length < this.controlen){
   			if(this.pantalla != "0"){
   				this.pantalla += valor;
@@ -50,6 +55,29 @@ var Calculadora = {
   			}
   			this.viewdisplay();
   		}
+  	},
+
+    punto: function(){
+  		this.animboton("punto");
+  		if(this.decimal == 0){
+  			this.pantalla += ".";
+  		}
+  		this.decimal = 1,
+  		this.viewdisplay();
+  	},
+    on: function(){
+  		this.animboton("on");
+  		this.pantalla = "0",
+  		this.decimal = 0,
+  		this.signo = 0,
+  		this.stop = 0,
+  		this.controlen = 8
+  		this.num1 = 0,
+  		this.auxestado = 0,
+  		this.auxnum = 0,
+  		this.opcion = 0,
+  		this.auxresultado = 0,
+  		this.viewdisplay();
   	},
 
     viewdisplay: function(){
