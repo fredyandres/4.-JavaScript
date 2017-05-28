@@ -37,12 +37,17 @@ var Calculadora = {
 		document.getElementById("9").addEventListener("click",function(){Calculadora.viewnum("9")});
     document.getElementById("punto").addEventListener("click",function(){Calculadora.punto()});
     document.getElementById("on").addEventListener("click",function(){Calculadora.on("")});
+    document.getElementById("sign").addEventListener("click",function(){Calculadora.sign()});
   },
 
   //operaciones
   	viewnum: function(valor){
   		this.animboton(valor);
       if(this.decimal == 1  && this.stop == 0){
+  			this.controlen += 1,
+  			this.stop = 1;
+  		}
+      if(this.signo == 1 && this.stop == 0){
   			this.controlen += 1,
   			this.stop = 1;
   		}
@@ -80,9 +85,30 @@ var Calculadora = {
   		this.viewdisplay();
   	},
 
+    sign: function(){
+  		this.animboton("sign");
+  		if(this.pantalla != 0){
+
+  			if(this.signo == 0){
+  					this.signo = 1;
+  			}
+  			else{
+  				this.signo = 0;
+  			}
+  		}
+  		this.pantalla = String((-1)* Number(this.pantalla));
+  		this.viewdisplay();
+  	},
+
+
     viewdisplay: function(){
       if(this.pantalla.toString().length > this.controlen){
-        this.pantalla = this.pantalla.toString().substring(0,8);
+        if(Number(this.pantalla)<0){
+  				this.pantalla = this.pantalla.toString().substring(0,9);
+  			}
+  			else{
+  			this.pantalla = this.pantalla.toString().substring(0,8);
+  			}
       }
       document.getElementById("display").innerHTML = this.pantalla;
     }
